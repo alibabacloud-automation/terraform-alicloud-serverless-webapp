@@ -8,6 +8,11 @@ output "this_api_gateway_group_name" {
   value       = concat(alicloud_api_gateway_group.this.*.name, [""])[0]
 }
 
+output "this_api_gateway_group_domain" {
+  description = "The sub domain of the api gateway group"
+  value       = concat(alicloud_api_gateway_group.this.*.sub_domain, [""])[0]
+}
+
 output "this_api_gateway_api_id" {
   description = "The id of the api gateway api"
   value       = concat(alicloud_api_gateway_api.this.*.api_id, [""])[0]
@@ -41,6 +46,11 @@ output "this_fc_function_name" {
 output "this_request_parameters" {
   description = "The request parameters of the api gateway api"
   value       = alicloud_api_gateway_api.this.*.request_parameters
+}
+
+output "this_request_config" {
+  description = "The request config of the api gateway api"
+  value       = alicloud_api_gateway_api.this.*.request_config
 }
 
 output "this_fc_service_config" {
