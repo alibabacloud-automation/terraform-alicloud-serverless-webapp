@@ -7,11 +7,11 @@ def handler(event, context):
     ct = json.loads(event)
     mob = ct['queryParameters']['mob']
     #return ct
-    host = 'http://plocn.market.alicloudapi.com' #market aliyun provider
-    path = '/plocn'
+    host = 'http://imobile.market.alicloudapi.com' #market aliyun provider
+    path = '/mobile/query'
     method = 'GET'
     appcode = ct['queryParameters']['appcode']
-    querys = "n="+ mob
+    querys = "number="+ mob
     bodys = {}
     url = host + path + '?' + querys
     request = urllib2.Request(url)

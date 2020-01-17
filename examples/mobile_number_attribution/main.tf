@@ -1,5 +1,21 @@
+// This is a example show how to create a serverless webapp, product details reference: https://market.aliyun.com/products/57002003/cmapi028134.html
+
+variable "has_purchased" {
+  description = "If you have not purchased this product, please set `false`, if you have already purchased this product, please set `true`"
+  type        = bool
+  default     = true
+}
+
 data "alicloud_api_gateway_apps" "this" {
   name_regex = "^云市场.*"
+}
+
+resource "alicloud_market_order" "this" {
+  count           = var.has_purchased ? 0 : 1
+  product_code    = "cmapi028134"
+  pay_type        = "PrePaid"
+  pricing_cycle   = "Year"
+  package_version = "yuncode2213400000"
 }
 
 module "mobile_number_attribution" {
@@ -29,7 +45,7 @@ module "mobile_number_attribution" {
   api_request_config = [{
     protocol = "HTTP"
     method   = "GET"
-    path     = "/getInfo"
+    path     = "/mobile/query"
     mode     = "MAPPING"
   }]
 }
