@@ -4,7 +4,7 @@ provider "alicloud" {
   shared_credentials_file = var.shared_credentials_file != "" ? var.shared_credentials_file : null
   region                  = var.region != "" ? var.region : null
   skip_region_validation  = var.skip_region_validation
-  configuration_source    = "terraform-alicloud-modules/serverless-webapp/alicloud"
+  configuration_source    = "terraform-alicloud-modules/serverless-webapp"
 }
 
 data "alicloud_regions" "this" {
@@ -12,7 +12,9 @@ data "alicloud_regions" "this" {
 }
 
 module "fc" {
-  source                 = "terraform-alicloud-modules/fc/alicloud"
+  source = "terraform-alicloud-modules/fc/alicloud"
+  region = var.region
+
   create_service         = true
   service_name           = var.fc_service_name
   create_http_function   = true
@@ -23,14 +25,14 @@ module "fc" {
 resource "alicloud_api_gateway_group" "this" {
   count       = var.create_api_gateway ? var.create_api_gateway_group ? 1 : 0 : 0
   name        = var.group_name == "" ? "ServerlessWebGroup${random_integer.this.result}" : var.group_name
-  description = "Create by modules/terraform-alicloud-serverless-webapp"
+  description = "Created by modules/terraform-alicloud-serverless-webapp"
 }
 
 resource "alicloud_api_gateway_api" "this" {
   count       = var.create_api_gateway ? 1 : 0
   name        = var.api_name == "" ? "ServerlessWebApi${random_integer.this.result}" : var.api_name
   group_id    = compact(concat([var.group_id], alicloud_api_gateway_group.this.*.id))[0]
-  description = "Create by modules/terraform-alicloud-serverless-webapp"
+  description = "Created by modules/terraform-alicloud-serverless-webapp"
   auth_type   = var.api_auth_type
   dynamic "request_config" {
     for_each = var.api_request_config
@@ -69,7 +71,7 @@ resource "alicloud_api_gateway_api" "this" {
 resource "alicloud_api_gateway_app" "this" {
   count       = var.create_api_gateway ? 1 : 0
   name        = var.app_name == "" ? "ServerlessWebApp${random_integer.this.result}" : var.app_name
-  description = "Create by modules/terraform-alicloud-serverless-webapp"
+  description = "Created by modules/terraform-alicloud-serverless-webapp"
 }
 
 resource "alicloud_api_gateway_app_attachment" "foo" {

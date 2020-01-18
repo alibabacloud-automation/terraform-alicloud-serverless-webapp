@@ -8,9 +8,14 @@ output "this_api_gateway_group_name" {
   value       = concat(alicloud_api_gateway_group.this.*.name, [""])[0]
 }
 
-output "this_api_gateway_group_domain" {
-  description = "The sub domain of the api gateway group"
+output "this_api_gateway_group_sub_domain" {
+  description = "The public sub domain of the api gateway group"
   value       = concat(alicloud_api_gateway_group.this.*.sub_domain, [""])[0]
+}
+
+output "this_api_gateway_group_vpc_domain" {
+  description = "The vpc sub domain of the api gateway group"
+  value       = concat(alicloud_api_gateway_group.this.*.vpc_domain, [""])[0]
 }
 
 output "this_api_gateway_api_id" {

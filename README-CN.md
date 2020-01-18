@@ -1,13 +1,15 @@
-Alibaba Cloud Serverless Webapp Terraform Module 
+Alibaba Cloud Serverless Webapp Terraform Module  
+terraform-alicloud-serverless-webapp
 =====================================================================
 
-本 Module 用于在阿里云创建一个以函数计算为后台的 API 网关. 
+本 Module 用于在阿里云上基于函数计算服务和API Gateway快速部署Serverless应用。 
 
 本 Module 支持创建以下资源:
 
 * [API Gateway API](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_api.html)
 * [API Gateway APP](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_app.html)
 * [API Gateway Group](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_group.html)
+* [Function Computing Module](https://registry.terraform.io/modules/terraform-alicloud-modules/fc/alicloud)
 
 
 ## Terraform 版本
@@ -69,7 +71,7 @@ module "serverless-webapp" {
 
 ## 示例
 
-* [手机号码归属地查询示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/tree/master/examples/mobile_number_attribution)
+* [手机号码归属地查询示例](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/tree/master/examples/cell-phone-number-querying)
 
 ## 注意事项
 

@@ -20,7 +20,7 @@ variable "skip_region_validation" {
 // FC variables
 variable "fc_service_name" {
   description = "The name of fc service"
-  default     = "terraform-fc-service"
+  default     = "terraform-fc-service-for-serverless-webapp"
 }
 
 variable "fc_runtime" {
