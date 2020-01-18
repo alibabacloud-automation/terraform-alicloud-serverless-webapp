@@ -1,16 +1,17 @@
-Alibaba Cloud Serverless Webapp Terraform Module 
+Alibaba Cloud Serverless Webapp Terraform Module  
+terraform-alicloud-serverless-webapp
 =====================================================================
 
 English | [简体中文](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/blob/master/README-CN.md)
 
-Terraform module which creates Serverless Application on Alibaba Cloud. 
+This repository contains an opinionated Terraform module for deploying "serverless" web applications to Alibaba Cloud Function Computing and exposing them publicly using Alibaba Cloud API Gateway running in its proxy mode.
 
 These types of resources are supported:
 
 * [API Gateway API](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_api.html)
 * [API Gateway APP](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_app.html)
 * [API Gateway Group](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_group.html)
-
+* [Function Computing Module](https://registry.terraform.io/modules/terraform-alicloud-modules/fc/alicloud)
 
 ## Terraform versions
 
@@ -71,7 +72,7 @@ module "serverless-webapp" {
 
 ## Examples
 
-* [Mobile Number Attribution example](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/tree/master/examples/mobile_number_attribution)
+* [Mobile Number Attribution example](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/tree/master/examples/cell-phone-number-querying)
 
 ## Notes
 
@@ -85,6 +86,7 @@ Created and maintained by Wang li(@Lexsss, 13718193219@163.com) and He Guimin(@x
 License
 ----
 Apache 2 Licensed. See LICENSE for full details.
+
 Reference
 ---------
 * [Terraform-Provider-Alicloud Github](https://github.com/terraform-providers/terraform-provider-alicloud)
