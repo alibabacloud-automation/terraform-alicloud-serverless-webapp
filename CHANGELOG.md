@@ -1,4 +1,7 @@
 ## 1.1.0 (Unreleased)
+
+- **Added:** `example` [GH-5](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/pull/5)
+
 ## 1.0.0 (January 18, 2020)
 
 - **Added:** `module` [GH-1](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/pull/1)
