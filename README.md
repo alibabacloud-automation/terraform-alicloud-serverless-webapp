@@ -13,10 +13,6 @@ These types of resources are supported:
 * [API Gateway Group](https://www.terraform.io/docs/providers/alicloud/r/api_gateway_group.html)
 * [Function Computing Module](https://registry.terraform.io/modules/terraform-alicloud-modules/fc/alicloud)
 
-## Terraform versions
-
-This module requires Terraform 0.12.
-
 ## Usage
 
 ```hcl
@@ -75,13 +71,73 @@ module "serverless-webapp" {
 * [Mobile Number Attribution example](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/tree/master/examples/cell-phone-number-querying)
 
 ## Notes
+From the version v1.2.0, the module has removed the following `provider` setting:
 
-* This module using AccessKey and SecretKey are from `profile` and `shared_credentials_file`.
-If you have not set them yet, please install [aliyun-cli](https://github.com/aliyun/aliyun-cli#installation) and configure it.
+```hcl
+provider "alicloud" {
+  profile                 = var.profile != "" ? var.profile : null
+  shared_credentials_file = var.shared_credentials_file != "" ? var.shared_credentials_file : null
+  region                  = var.region != "" ? var.region : null
+  skip_region_validation  = var.skip_region_validation
+  configuration_source    = "terraform-alicloud-modules/serverless-webapp"
+}
+```
+
+If you still want to use the `provider` setting to apply this module, you can specify a supported version, like 1.1.0:
+
+```hcl
+module "serverless-webapp" {
+  source          = "terraform-alicloud-modules/serverless-webapp/alicloud"
+  version         = "1.1.0"
+  region          = "cn-hangzhou"
+  profile         = "Your-Profile-Name"
+  fc_service_name = "terraform-fc-service"
+  fc_runtime      = "python2.7"
+  // ...
+}
+```
+
+If you want to upgrade the module to 1.2.0 or higher in-place, you can define a provider which same region with
+previous region:
+
+```hcl
+provider "alicloud" {
+  region  = "cn-hangzhou"
+  profile = "Your-Profile-Name"
+}
+module "serverless-webapp" {
+  source          = "terraform-alicloud-modules/serverless-webapp/alicloud"
+  fc_service_name = "terraform-fc-service"
+  fc_runtime      = "python2.7"
+  // ...
+}
+```
+or specify an alias provider with a defined region to the module using `providers`:
+
+```hcl
+provider "alicloud" {
+  region  = "cn-hangzhou"
+  profile = "Your-Profile-Name"
+  alias   = "hz"
+}
+module "serverless-webapp" {
+  source          = "terraform-alicloud-modules/serverless-webapp/alicloud"
+  providers = {
+    alicloud = alicloud.hz
+  }
+  fc_service_name = "terraform-fc-service"
+  fc_runtime      = "python2.7"
+  // ...
+}
+```
+
+and then run `terraform init` and `terraform apply` to make the defined provider effect to the existing module state.
+
+More details see [How to use provider in the module](https://www.terraform.io/docs/language/modules/develop/providers.html#passing-providers-explicitly)
 
 Authors
 -------
-Created and maintained by Wang li(@Lexsss, 13718193219@163.com) and He Guimin(@xiaozhu36, heguimin36@163.com)
+Created and maintained by Alibaba Cloud Terraform Team(terraform@alibabacloud.com).
 
 License
 ----
