@@ -1,4 +1,10 @@
-## 1.2.0 (Unreleased)
+## 1.3.0 (Unreleased)
+## 1.2.0 (December 09, 2021)
+
+ENHANCEMENTS:
+
+- Removes the provider setting and improves the Readme [GH-7](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/pull/7)
+
 ## 1.1.0 (February 27, 2020)
 
 - **Added:** `example` [GH-5](https://github.com/terraform-alicloud-modules/terraform-alicloud-serverless-webapp/pull/5)
