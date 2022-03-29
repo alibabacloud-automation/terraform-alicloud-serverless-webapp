@@ -4,26 +4,26 @@ data "alicloud_regions" "this" {
 
 module "fc" {
   source = "terraform-alicloud-modules/fc/alicloud"
-  region = var.region
 
-  create_service         = true
+  create_service         = var.create_service
   service_name           = var.fc_service_name
-  create_http_function   = true
+  create_http_function   = var.create_http_function
   http_function_filename = "./${data.archive_file.zip.output_path}"
   http_function_runtime  = var.fc_runtime
+
 }
 
 resource "alicloud_api_gateway_group" "this" {
   count       = var.create_api_gateway ? var.create_api_gateway_group ? 1 : 0 : 0
   name        = var.group_name == "" ? "ServerlessWebGroup${random_integer.this.result}" : var.group_name
-  description = "Created by modules/terraform-alicloud-serverless-webapp"
+  description = var.api_gateway_group_description
 }
 
 resource "alicloud_api_gateway_api" "this" {
   count       = var.create_api_gateway ? 1 : 0
   name        = var.api_name == "" ? "ServerlessWebApi${random_integer.this.result}" : var.api_name
   group_id    = compact(concat([var.group_id], alicloud_api_gateway_group.this.*.id))[0]
-  description = "Created by modules/terraform-alicloud-serverless-webapp"
+  description = var.api_gateway_api_description
   auth_type   = var.api_auth_type
   dynamic "request_config" {
     for_each = var.api_request_config
@@ -41,7 +41,7 @@ resource "alicloud_api_gateway_api" "this" {
     function_name = module.fc.this_http_function_name
     service_name  = module.fc.this_service_name
     arn_role      = alicloud_ram_role.this.arn
-    timeout       = 10
+    timeout       = var.timeout
   }
   dynamic "request_parameters" {
     for_each = var.api_request_parameters
@@ -62,13 +62,13 @@ resource "alicloud_api_gateway_api" "this" {
 resource "alicloud_api_gateway_app" "this" {
   count       = var.create_api_gateway ? 1 : 0
   name        = var.app_name == "" ? "ServerlessWebApp${random_integer.this.result}" : var.app_name
-  description = "Created by modules/terraform-alicloud-serverless-webapp"
+  description = var.api_gateway_app_description
 }
 
 resource "alicloud_api_gateway_app_attachment" "foo" {
   count      = var.create_api_gateway ? 1 : 0
   api_id     = concat(alicloud_api_gateway_api.this.*.api_id, [""])[0]
   group_id   = compact(concat([var.group_id], alicloud_api_gateway_group.this.*.id))[0]
-  stage_name = "RELEASE"
+  stage_name = var.app_stage_name
   app_id     = concat(alicloud_api_gateway_app.this.*.id, [""])[0]
 }
