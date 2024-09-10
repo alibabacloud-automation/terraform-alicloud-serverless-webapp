@@ -1,4 +1,7 @@
-## 1.3.0 (Unreleased)
+## 1.3.0 (September 10, 2024)
+
+- deprecate [GH-9](https://github.com/alibabacloud-automation/terraform-alicloud-serverless-webapp/pull/9)
+
 ## 1.2.0 (December 09, 2021)
 
 ENHANCEMENTS:
